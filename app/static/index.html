@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEDAMO Ingestion & Execution Pipeline</title>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-container">
+                <span class="logo-icon">▲</span>
+                <h1>HEDAMO <span class="subtitle">Agentic Work Intake & Execution</span></h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search stored work items...">
+                <button id="search-btn">Search</button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <div class="workspace">
+            <!-- Sidebar: Intake and History -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h2>New Intake</h2>
+                    <form id="intake-form">
+                        <textarea id="intake-text" placeholder="Paste unstructured email, founder instructions, website check request, or meeting notes here..." required></textarea>
+                        <button type="submit" id="intake-submit-btn">
+                            <span class="btn-text">Ingest & Process</span>
+                            <span class="spinner" id="intake-spinner"></span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="sidebar-section list-section">
+                    <h2>Previous Tasks</h2>
+                    <div id="work-items-list" class="work-items-list">
+                        <div class="empty-state">No tasks ingested yet.</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Pane: Details, Actions, Activity Trace -->
+            <main class="main-content">
+                <div id="no-selection-state" class="no-selection">
+                    <div class="no-selection-icon">🤖</div>
+                    <h3>No Task Selected</h3>
+                    <p>Select an ingested task from the list or paste unstructured text in the intake box to begin.</p>
+                </div>
+
+                <div id="detail-panel" class="detail-panel hidden">
+                    <!-- Task Overview Header -->
+                    <div class="detail-header">
+                        <div class="detail-title-row">
+                            <h2 id="task-title">Draft thank-you email and check website</h2>
+                            <div class="badges">
+                                <span id="task-priority" class="badge-priority">Priority: Medium</span>
+                                <span id="task-status" class="badge-status">AWAITING_REVIEW</span>
+                            </div>
+                        </div>
+                        <p id="task-summary" class="task-summary">Summary description of the task.</p>
+                        <div class="meta-row">
+                            <div id="task-deadline-container">📅 Deadline: <span id="task-deadline">N/A</span></div>
+                            <div class="timestamp">Ingested: <span id="task-timestamp">N/A</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Missing Info & Human Checklists -->
+                    <div id="warnings-container" class="warnings-container hidden">
+                        <div id="missing-info-card" class="warning-card hidden">
+                            <h4>⚠️ Missing Information Flagged</h4>
+                            <ul id="missing-info-list"></ul>
+                        </div>
+                    </div>
+
+                    <!-- Execution Pipeline and Action Items -->
+                    <div class="pipeline-section">
+                        <h3>Action Execution Plan & Routing</h3>
+                        <div class="action-items-container" id="action-items-list">
+                            <!-- Action items generated here -->
+                        </div>
+                    </div>
+
+                    <!-- System Activity Trace (Terminal Log) -->
+                    <div class="activity-section">
+                        <h3>Activity Trace Logs</h3>
+                        <div class="terminal-log" id="activity-log">
+                            <!-- Logs generated here -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Edit Action Dialog Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Action & Output Draft</h3>
+            <p class="modal-description">Review the draft, edit the description or text content, then approve to save.</p>
+            <div class="form-group">
+                <label for="edit-desc">Action Description</label>
+                <input type="text" id="edit-desc">
+            </div>
+            <div class="form-group">
+                <label for="edit-output">Draft Output Text</label>
+                <textarea id="edit-output" rows="12"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button id="modal-cancel-btn" class="btn-secondary">Cancel</button>
+                <button id="modal-approve-btn" class="btn-primary">Approve & Save</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/app.js"></script>
+</body>
+</html>
